@@ -1,45 +1,47 @@
-CXX=clang++
-CXXFLAGS=-std=c++11 -Werror
-VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all --error-exitcode=99
+# Makefile for Monopoly Game
 
-# Source files for different targets
-SOURCESDemo = Board.cpp Button.cpp Dice.cpp Slots.cpp Player.cpp KindOfSlot.cpp Demo.cpp card.cpp
-SOURCESCounterTests = Board.cpp Button.cpp Dice.cpp Slots.cpp Player.cpp Slots.cpp KindOfSlot.cpp Demo.cpp card.cpp
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++11 -I include -lsfml-graphics -lsfml-window -lsfml-system
 
-# Object files for different targets
-OBJECTSDemo = $(SOURCESDemo:.cpp=.o) 
-OBJECTSCounterTests = $(SOURCESCounterTests:.cpp=.o) 
+# Source files
+SRCS = main.cpp \
+       Player.cpp \
+       Slot.cpp \
+       Street.cpp \
+       Train.cpp \
+       Utility.cpp \
+       Surprise.cpp \
+       Tax.cpp \
+       Jail.cpp \
+       FreeParking.cpp \
+       GoToJail.cpp \
+       Board.cpp
 
-# Main targets
-fullGame: demo
-	./demo
+# Header files
+HEADERS = Player.hpp \
+          Slot.hpp \
+          Street.hpp \
+          Train.hpp \
+          Utility.hpp \
+          Surprise.hpp \
+          Tax.hpp \
+          Jail.hpp \
+          FreeParking.hpp \
+          GoToJail.hpp \
+          Board.hpp
 
-tests: testCounter
-	./testCounter
+# Output executable
+TARGET = monopoly
 
-# Build rules for executable targets
-demo: $(OBJECTSDemo)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+# Rule to build the executable
+all: $(TARGET)
 
-testCounter: $(OBJECTSCounterTests)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+$(TARGET): $(SRCS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
 
-# Tidy target for code quality checks
-tidy:
-	clang-tidy $(SOURCES) -checks=bugprone-*,clang-analyzer-*,cppcoreguidelines-*,performance-*,portability-*,readability-*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-owning-memory --warnings-as-errors=-* --
-
-# Valgrind targets for memory checking
-testvalgrind: testCounter
-	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./testCounter 2>&1 | { egrep "lost| at " || true; }
-
-demovalgrind: demo
-	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./demo 2>&1
-
-# Pattern rule for building object files
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Clean target to remove generated files
+# Rule for cleaning up
 clean:
-	rm -f *.o demo testCounter
+	rm -f $(TARGET) *.o
+
 
