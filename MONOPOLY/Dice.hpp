@@ -1,7 +1,6 @@
 #ifndef DICE_HPP
 #define DICE_HPP
 
-#include "Button.hpp"
 #include <random>
 
 class Dice : public Button {
