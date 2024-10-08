@@ -1,44 +1,39 @@
-#ifndef PLAYERS_HPP
-#define PLAYERS_HPP
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
 #include <string>
 #include <vector>
-#include <iostream>
-#include "Slots.hpp"
-#include "Board.hpp"
-#include "Dice.hpp"
+#include "Property.hpp"
 
-{
-    class Player
-    {
-    private:
-        std::string name; //the name of the player
-        std::string color; //his color
-        int currentIndex;
-        Slots* currentSlots;
-        sf::CircleShape token;
-        std::vector<sf::CircleShape> ownershipMarkers; // Vector to store ownership markers
-        int sizeMarkers = 0;
-        sf::Text playerInfo;
-        bool nowBuy;
-    public:
-        int numberOfTrains = 0;
-        int serialNum;
-        bool hisTurn = false;
-        std::vector<Slots> ownedProperties; // To store owned properties
-        int money;
-        Player(std::string name, std::string color, sf::RenderWindow &window, int serialNum);
-        std::string getName();
-        std::string getColor();
-        Slots* getCurrentSlots();
-        void setCurrentSlots(int numToMove, sf::RenderWindow &window);
-        void initializePlayerToken(sf::RenderWindow &window);
-        void drawTokenAndInfo(sf::RenderWindow &window);
-        void drawBuyButton(sf::RenderWindow &window);
-        bool handleBuyButtonClick(sf::RenderWindow &window);
-        bool checkIfCanBuildHouse();
-        bool checkIfCanBuildHotel();
-    };
-}
+class Player {
+private:
+    std::string name;
+    int money;
+    std::vector<Property*> ownedProperties; // List of properties owned by the player
+    int position; // Player's current position on the board
+    int jailTurns; // Number of turns in jail
+    int surpriseTickets; // Number of surprise "get out of jail" tickets
+
+public:
+    Player(std::string name);
+
+    std::string getName() const;
+    int getMoney() const;
+    int getPosition() const;
+    int getJailTurns() const;
+    int getSurpriseTickets() const;
+    
+    bool canAfford(int cost) const;
+
+    void addMoney(int amount);
+    void deductMoney(int amount);
+    void buyProperty(Property& property);
+    void payRent(int rent);
+    void move(int steps);
+    void goToJail();
+    void useSurpriseTicket();
+
+    const std::vector<Property*>& getOwnedProperties() const;
+};
 
 #endif // PLAYER_HPP
