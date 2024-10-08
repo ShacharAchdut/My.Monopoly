@@ -1,22 +1,30 @@
 Monopoly Game
+
 SHACHAR ACHDUT-323856195
+
 Project Overview
 
 This project is a version of the classic Monopoly game, developed using C++ and the SFML library for GUI rendering. The game simulates the core mechanics of Monopoly, including player movement, buying and selling properties, paying rent and taxes, and interacting with different types of board slots (streets, trains, utilities, taxes, surprise cards, and jail).
 
+
 Features:
+
 
     Dice Rolls: The Players roll two dice to determine their movement across the board.
     Player Movement: Players move around a board with 40 slots, advancing based on dice rolls.
     Property Management: Players can buy properties or pay rent or tax when landing on owned properties.
     Special Slots: Includes slots like "Free Parking", "Jail", "Water & Electriciyu company" and "Go to Jail", as well as Surprise and Tax slots.
     Simple SFML-based GUI: The game is displayed graphically using SFML, showcasing a basic layout of the board and player pieces.
+    
 
 Rules of the Game-
+
 Game Setup:
+
 
     Each player starts with a set amount of money ($1,500).
     Players take turns rolling two dices to move around the 40 slots board.
+
  
 Buying Properties:
 
