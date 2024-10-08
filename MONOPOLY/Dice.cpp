@@ -1,17 +1,18 @@
 #include "Dice.hpp"
-#include <iostream>
 
-// קונסטרקטור של הקוביה, יוצר את הכפתור עם פונקציונליות של קוביה
-Dice::Dice(float size, sf::Font &font, const sf::Color &color)
-    : Button(size, font, color), gen(rd()), dis(1, 6) // אתחול הגנרטור והטווח
-{
-    // קוביה מתחילה עם הערך 1
-    currentValue = 1;
-    text.setString(std::to_string(currentValue)); // עדכון הטקסט בקוביה לערך ההתחלתי
+// Constructor
+Dice::Dice() {
+    std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
 }
 
-// פונקציה שמגרילה מספר אקראי ומעדכנת את הערך של הקוביה
-void Dice::roll() {
-    currentValue = dis(gen); // מגריל מספר בין 1 ל-6
-    text.setString(std::to_string(currentValue));
+// Roll a single die (returns a value between 1 and 6)
+int Dice::roll() {
+    return (std::rand() % 6) + 1; // Generate a random number between 1 and 6
+}
+
+// Roll two dice and return the total
+int Dice::rollTwoDice() {
+    int die1 = roll();  // Roll the first die
+    int die2 = roll();  // Roll the second die
+    return die1 + die2; // Return the total of both dice
 }
